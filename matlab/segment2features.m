@@ -93,18 +93,18 @@ f11 = sum(sum(Iletter2(7:12, 11:20)));
 f12 = sum(sum(Iletter2(13:18, 11:20))); 
 
 %teer = bweuler(itemp,1);
-f13 = regionprops(Iletter,'area');
-f133 = f13.Area;
+%f13 = regionprops(Iletter,'area');
+%f133 = f13.Area;
 
-f14 = regionprops(Iletter,'convexarea');
-f144 = f14.ConvexArea;
+%f14 = regionprops(Iletter,'convexarea');
+%f144 = f14.ConvexArea;
 
-f15 = regionprops(Iletter,'Centroid');
-f155 = f15.Centroid;
-f1555 = f155(1);
-f15555 = f155(2);
+%f15 = regionprops(Iletter,'Centroid');
+%f155 = f15.Centroid;
+%f1555 = f155(1);
+%f15555 = f155(2);
 
-features = [f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12 f133 fcountcol fcountrow 1]'
+features = [f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12 fcountcol fcountrow]'
 
 % Iletteruniquerow = unique(Iletter,'rows');
 % Iletteruniquecolumns = unique(Iletter','rows');

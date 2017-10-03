@@ -4,8 +4,8 @@ correctionRates = []; % Stores all rates for each iterations
 % Settings for assignments.
 
 testingIterations = 100;
-totalFeatureVectors = 200; % 570 for assign 3, 200 for assn 2. Amount of feature vectors
-SelectMethod = 3; % 1 = our method, 2 = regression tree, 3 = support vector,
+totalFeatureVectors = 100; % 570 for assign 3, 200 for assn 2. Amount of feature vectors
+SelectMethod = 1; % 1 = our method, 2 = regression tree, 3 = support vector,
 % 4 = nearest neighbour matlab
 
 % NOTE: 3 takes a really long time. Use low iteration values. 
