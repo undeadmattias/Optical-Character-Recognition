@@ -1,0 +1,12 @@
+% Setup classification data for the benchmark test
+load ocrsegments
+
+filesize = size(S,2);
+
+[classification_data] = class_train(S, y);
+
+classification_data ´=cell(1,2);
+
+filename = 'classification_data';
+save(filename, 'classification_data');
+
