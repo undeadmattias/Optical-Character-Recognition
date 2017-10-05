@@ -14,7 +14,7 @@ function y = classify(x, classification_data)
             bestImage = i;
         end
     end
-    y = truthTableX(1, bestImage); 
+    y = truthTableX(bestImage); 
     % returns 1 if face, 0 if not face.
     %
  

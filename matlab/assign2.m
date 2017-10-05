@@ -1,14 +1,22 @@
-
-correctionRates = []; % Stores all rates for each iterations
-
 % Settings for assignments.
 
 testingIterations = 100;
-totalFeatureVectors = 100; % 570 for assign 3, 200 for assn 2. Amount of feature vectors
-SelectMethod = 1; % 1 = our method, 2 = regression tree, 3 = support vector,
+MethodSelection = 1; % 1 = our method, 2 = regression tree, 3 = support vector,
 % 4 = nearest neighbour matlab
+AssignmentSelection = 1; % Select which assignment. 1 = assign 2, 2 = assign 3.
+ 
+switch AssignmentSelection
+  case 1 % assign 2
+      load FaceNonFace
+      totalFeatureVectors = 200; 
+  case 2 % assign 3
+      assign3; % running assignment 3 script file. 
+      totalFeatureVectors = 30; % there are 30 O's and C's in total
+end
 
 % NOTE: 3 takes a really long time. Use low iteration values. 
+
+correctionRates = []; % Stores all rates for each iterations
 
 for times = 1:testingIterations
     % Create test set and training set (randomly)
@@ -28,7 +36,7 @@ for times = 1:testingIterations
     
     
     
-    switch SelectMethod %Selects which method to use for training
+    switch MethodSelection %Selects which method to use for training
         case 1 % our own method (assn 2)
             [classification_data] = class_train(train_set_values, Y(:, train_set_indexes')); 
             % sends into the train function which just returns the values. 
@@ -41,7 +49,7 @@ for times = 1:testingIterations
             % To work with matlabs functions.
             tree = fitctree(train_set_values', Y(:, train_set_indexes')');
         case 3 % SVM (support Vector Machine.
-            SVMModel = fitcecoc(train_set_values', Y(:, train_set_indexes')'); %fitcsvm(X,Y) doesn't work for more than 2 classes
+            SVMModel = fitcsvm(train_set_values', Y(:, train_set_indexes')'); %fitcsvm(X,Y) doesn't work for more than 2 classes
         case 4 % nearest neightbour
             mdl = fitcknn(train_set_values', Y(:, train_set_indexes')');
     end
@@ -62,7 +70,7 @@ for times = 1:testingIterations
         xIndexInY = test_set_indexes(testIndex); % The index of the X.
         
         correctY = Y(xIndexInY); % the correct Y
-        switch SelectMethod %Selects which method to use for training
+        switch MethodSelection %Selects which method to use for training
             case 1 % our own method (assn 2)
                 y = classify(x, classification_data); % -1 = not face. 1 = face 
             case 2 % Matlabs classify functions below. Uses .predict to classify
