@@ -18,3 +18,5 @@ image1Diff = abs(filteredImage1a - filteredImage1b) > thresholdValue;
 % imagesc(abs(filteredImage1a - filteredImage1b))
 figure()
 imagesc(image1Diff)
+
+%Hallaasdad
