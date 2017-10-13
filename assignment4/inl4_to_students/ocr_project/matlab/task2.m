@@ -52,8 +52,8 @@ Theta = reshape(Theta ,imageWidth, imageHeight);
 Theta = double(Theta);
 toc
 
-imshow(Theta.*im)
+imshow(Theta)
 figure
 imshow(im)
-disp("Approve this please")
+disp('Approve this please')
 

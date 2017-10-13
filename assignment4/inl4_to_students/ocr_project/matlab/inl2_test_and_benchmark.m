@@ -28,7 +28,7 @@ mysystem.segmenter = 'im2segment'; % What is the name of your segmentation-algor
 mysystem.features = 'segment2features'; % What is the name of your features-algorithm.
 
 %% Choose dataset
-datadir = '../datasets/short1';     % Which folder of examples are you going to test it on
+datadir = '../datasets/home1';     % Which folder of examples are you going to test it on
 
 %% Benchmark and visualize
 mode = 2; % debug mode with the most plots
