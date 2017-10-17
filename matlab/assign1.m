@@ -8,6 +8,19 @@ plot(x,y,'x')
 hold on;
 fplot(linefit, [-0.1 0.4], 'g')
 
+% Calculate the least square error for the line
+leastSquareError = 0;
+for i = size(x, 2)
+    leastSquareError = leastSquareError + abs(y(i)-linefit(x(i)));
+end
+
+% Calculate the total least square error for the line
+totalLeastSquareError = 0;
+
+for i = 1:size(x, 2)
+    totalLeastSquareError = totalLeastSquareError + distanceToLine(x(i) ,y(i) , p(1), -1, p(2))^2;
+end
+
 %% Total least square
 N = size(x, 2);
 m11 = sum(x.*x) - (1/N)*sum(x)*sum(x);
@@ -36,3 +49,19 @@ plot(x,y,'x')
 hold on;
 fplot(linefit1, [-0.1 0.4], 'r')
 fplot(linefit2, [-0.1 0.4], 'b')
+
+% Calculate the least square error the line1
+leastSquareError1 = 0;
+for i = size(x, 2)
+    leastSquareError1 = leastSquareError1 + abs(y(i)-linefit1(x(i)));
+end
+
+% Calculate the total least square error for line1
+totalLeastSquareError1 = 0;
+for i = 1:size(x, 2)
+    totalLeastSquareError1 = totalLeastSquareError1 + distanceToLine(x(i) ,y(i) , (-1)*a1/b1, -1, (-1)*c1/b1)^2;
+end
+
+function l = distanceToLine(x, y, a, b, c)
+    l = abs(a*x + b*y + c)/sqrt(a^2 + b^2);
+end
