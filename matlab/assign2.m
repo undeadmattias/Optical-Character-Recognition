@@ -6,10 +6,10 @@ MethodSelection = 1; % 1 = our method, 2 = regression tree, 3 = support vector,
 AssignmentSelection = 1; % Select which assignment. 1 = assign 2, 2 = assign 3.
  
 switch AssignmentSelection
-  case 1 % assign 2
+  case 1
       load FaceNonFace
       totalFeatureVectors = 200; 
-  case 2 % assign 3
+  case 2
       assign3; % running assignment 3 script file. 
       totalFeatureVectors = 30; % there are 30 O's and C's in total
 end
