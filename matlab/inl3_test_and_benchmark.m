@@ -45,4 +45,3 @@ mode = 0; % debug modes
 [hitrate,confmat,allres,alljs,alljfg,allX,allY]=benchmark_inl3(mysystem,datadir,mode);
 
 hitrate
-
