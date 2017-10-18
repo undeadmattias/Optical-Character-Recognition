@@ -1,9 +1,9 @@
 % Settings for assignments.
 
 testingIterations = 100;
-MethodSelection = 1; % 1 = our method, 2 = regression tree, 3 = support vector,
+MethodSelection = 2; % 1 = our method, 2 = regression tree, 3 = support vector,
 % 4 = nearest neighbour matlab
-AssignmentSelection = 1; % Select which assignment. 1 = assign 2, 2 = assign 3.
+AssignmentSelection = 2; % Select which assignment. 1 = assign 2, 2 = assign 3.
  
 switch AssignmentSelection
   case 1

@@ -3,7 +3,7 @@ load ocrfeaturestrain
 % 1 regression tree
 % 2 support vector
 % 3 nearest neighbour
-method = 3;
+method = 2;
 
 % Take out the letters C and O from the data set
 indexYOfCO = (Y == 3 | Y == 15);
@@ -12,11 +12,12 @@ Y = Y(:, indexYOfCO);
 
 numberOfVectors = 30;
 correctionRates = [];
+trainingCorrectionRates = [];
 
 for times = 1:100
     % Create test set and training set
     correctClassifications = 0;
-    part= cvpartition(numberOfVectors,'HoldOut',0.80);
+    part= cvpartition(numberOfVectors,'HoldOut',0.20);
 
     trainSet = find(part.training == 1);
     testSet = find(part.test == 1);
@@ -32,6 +33,26 @@ for times = 1:100
             SupportVectorMachine = fitcsvm(trainSetValues', Y(:, trainSet')');
         case 3
             NearestNeighbour = fitcknn(trainSetValues', Y(:, trainSet')');
+    end
+    
+    % Training error
+    correctTrainingClassifications = 0;
+    for trainingIndex = 1:size(trainSetValues, 2)
+        trainingX = trainSetValues(:, trainingIndex);
+        
+        correctTrainingY = Y(trainSet(trainingIndex));
+        switch method
+            case 1
+                trainingY = RegressionTree.predict(trainingX');
+            case 2
+                trainingY = SupportVectorMachine.predict(trainingX');
+            case 3
+                trainingY = NearestNeighbour.predict(trainingX');
+        end       
+
+        if (correctTrainingY == trainingY) == 1
+            correctTrainingClassifications = correctTrainingClassifications + 1;
+        end
     end
 
     % Testing
@@ -53,6 +74,8 @@ for times = 1:100
         end
     end
     correctionRates = [correctionRates correctClassifications/size(testSetValues, 2)];
+    trainingCorrectionRates = [trainingCorrectionRates correctTrainingClassifications/size(trainSetValues, 2)];
 end
 meanTruth = mean(correctionRates)
 meanError = 1 - mean(correctionRates)
+meanTrainingTruth = mean(trainingCorrectionRates)
