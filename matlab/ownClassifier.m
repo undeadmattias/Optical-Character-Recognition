@@ -20,7 +20,7 @@ for times = 1:iterations
     correctClassifications = 0;
     
     % Test
-    for testIndex = 1:test_set_size
+    for testIndex = 1:size(testSetValues, 2)
         x = testSetValues(:, testIndex);
         xIndexInY = testSetIndexes(testIndex);
         
