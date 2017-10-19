@@ -1,3 +1,4 @@
+load linjepunkter
 % Least squares method
 A = [x ; ones(1, size(x,2))]';
 p = A\y';
@@ -10,8 +11,8 @@ fplot(linefit, [-0.1 0.4], 'g')
 
 % Calculate the least square error for the line
 leastSquareError = 0;
-for i = size(x, 2)
-    leastSquareError = leastSquareError + abs(y(i)-linefit(x(i)));
+for i = 1:size(x, 2)
+    leastSquareError = leastSquareError + abs(y(i)-linefit(x(i)))^2;
 end
 
 % Calculate the total least square error for the line
@@ -35,10 +36,8 @@ m = [m11 m12 ; m21 m22];
 
 a1 = V(1, 1);
 a2 = V(1, 2);
-
 b1 = V(2, 1);
 b2 = V(2, 2);
-
 c1 = -(1/N)*(a1*sum(x) + b1*sum(y));
 c2 = -(1/N)*(a2*sum(x) + b2*sum(y));
 
@@ -52,8 +51,8 @@ fplot(linefit2, [-0.1 0.4], 'b')
 
 % Calculate the least square error the line1
 leastSquareError1 = 0;
-for i = size(x, 2)
-    leastSquareError1 = leastSquareError1 + abs(y(i)-linefit1(x(i)));
+for i = 1:size(x, 2)
+    leastSquareError1 = leastSquareError1 + abs(y(i)-linefit1(x(i)))^2;
 end
 
 % Calculate the total least square error for line1
