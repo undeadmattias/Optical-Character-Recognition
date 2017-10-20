@@ -21,6 +21,7 @@ chamber_y = exp(- 0.5 * ((chamber_x - chamber_mu) / chamber_sigma) .^ 2) / (cham
 
 % Plotting the gaussian distributions
 % The blue is the background and the red is the chamber class
+hold on
 plot(background_x, background_y, 'b')
 plot(chamber_x, chamber_y, 'r')
 
@@ -35,15 +36,11 @@ numberOfPixels = imageHeight * imageWidth;
 Neighbours = edges4connected(imageWidth, imageHeight);
 i = Neighbours(:,1);
 j = Neighbours(:,2);
-A = sparse(i, j, 0.1, numberOfPixels, numberOfPixels);
+A = sparse(i, j, 0.5, numberOfPixels, numberOfPixels);
 
 [X,Y] = ndgrid(1:imageWidth,1:imageHeight);
-% draw_graph(X(:),Y(:),A); % This operation drains computer power for such
-% large images as this one
 
 % Set A to lambda?
-
-
 T = [ (im(:)-chamber_mu).^2 (im(:)-background_mu).^2];
 T = sparse(T);
 tic
@@ -52,8 +49,6 @@ Theta = reshape(Theta ,imageWidth, imageHeight);
 Theta = double(Theta);
 toc
 
-imshow(Theta)
-figure
 imshow(im)
-disp('Approve this please')
-
+figure
+imshow(Theta)

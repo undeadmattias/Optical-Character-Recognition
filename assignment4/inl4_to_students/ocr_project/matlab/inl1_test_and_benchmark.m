@@ -20,7 +20,7 @@
 
 %% Setup the names of the functions of your OCR system.
 
-mysystem.segmenter = 'im2segment'; % What is the name of your segmentation-algorithm.
+mysystem.segmenter = 'im2segment2'; % What is the name of your segmentation-algorithm.
 
 %% Choose dataset
 datadir = '../datasets/short1';     % Which folder of examples are you going to test it on

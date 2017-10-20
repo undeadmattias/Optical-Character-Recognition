@@ -1,46 +1,99 @@
 function [S] = im2segment(im)
-    m = size(im,1); % row size
-    n = size(im,2); % column size
+  threshold = 110; % The threshold for determining if the pixel should be 
+                   % black or white
 
-    imgCount = 1; 
-    imgFound = 0;
+  nrofsegments = 5;
+  m = size(im,1); % Rows
+  n = size(im,2); % Columns
 
-    imageConv = im < 140; % Every pixel less than 140 gets set to 1 and counts as black
-    
-   % imageGroup = bwlabel(imageConv);
-   % maxGroup = max(max(imageGroup))
-    
-%     for i = 1:maxGroup
-%       % pause()
-%         if (sum(sum(imageGroup == i)) < 200)
-%            imageConv(imageGroup == i) = 0;
-% 
-%             
-%         end
-%         
-%     end 
-%               figure()
-%            imageConv(imageGroup == i) = 0; 
-%            imshow(imageGroup)
-%            figure()
-%            imshow(imageConv)
+  S = cell(1,nrofsegments);
 
-    
-for kk = 1:n
-    %S{kk}= zeros(m, n);
-    if sum(imageConv(:, kk)) > 0  % if there is at least one pixel that is black in the column
-        if (imgFound == 0) % If looking for start index for image
-           
-            imgFound = kk; % Sets a start index
-        end
-    else
-        
-        if imgFound > 0 % If start index looking for end index
-            result = zeros(m, n); % Fills result with zeros to begin with
-            result(:, imgFound:kk-1) = imageConv(:, imgFound:kk-1); % The columns for a letter gets inserted into result
-            S{imgCount}= result; % result is returned as the first letter with zeros everywhere else
-            imgCount = imgCount + 1; % Increase letter count
-            imgFound = 0; % looks for a new letter
-        end
+  for kk = 1:nrofsegments
+
+      image = im;
+      
+      % Determine the interval in which the current character exists
+      endRow = 1;
+      letterNumber = kk;
+      while letterNumber > 0
+          startRow = findNextLetterRow(image, endRow, m, n, threshold);
+          endRow = findNextWhiteRow(image, startRow, m, n, threshold);
+          letterNumber = letterNumber - 1;
+      end
+
+      % Fill all the area outside the interval with black pixels and
+      % invert the colors
+      image = invertColor(image, threshold);
+      image = fillBlack(image, 1, startRow-1);
+      image = fillBlack(image, endRow, n);
+
+      % Put the letter image in the right position
+      S{kk} = image;
+  end
+
+end
+
+%% Help functions
+
+% Starting for a startIndex row, will find the next row in an image that 
+% has a row of only pixels above a threshold value (white pixels)
+function row = findNextWhiteRow(image, startIndex, rows, cols, threshold)
+    for y = startIndex:cols
+        whiteRow = true;
+         for x = 1:rows
+             if image(x,y) < threshold
+                 whiteRow = false;
+                 break
+             end
+         end
+
+         if whiteRow
+            row = y;
+             break
+         end
+    end
+    row = y;
+end
+
+% Starting for a startIndex row, will find the next row in an image that 
+% has a row of a pixels under a threshold value (black pixels). This
+% indicates that a character is on that row and the row will be returned.
+function row = findNextLetterRow( image, startIndex, rows, cols, threshold )
+     for y = startIndex:cols
+          for x = 1:rows
+              pixel = image(x,y);
+              if (pixel < threshold)
+                  row = y;
+                  return
+              end
+          end
+     end
+     row = cols;
+end
+
+% Will take an black and white image and invert the colors.
+function image = invertColor(input, threshold)
+
+    for y = 1:size(input,2)
+         for x = 1:size(input,1)
+             pixel = input(x,y);
+              if pixel < threshold
+                  input(x,y) = 1;
+              else
+                  input(x,y) = 0;
+              end
+         end
+    end
+
+    image = input;
+end
+
+% Will overwrite an image with black pixels within an interval
+function image = fillBlack(image, startIndex, stopIndex)
+    for y = startIndex:stopIndex
+         for x = 1:size(image,1)
+             image(x,y) = 0;
+         end
     end
 end
+
