@@ -33,4 +33,6 @@ for dir = datadirs
     
     inl4_test_and_benchmark
     errorVal = (1-hitrate)
+    
+    disp("Test completed!");
 end

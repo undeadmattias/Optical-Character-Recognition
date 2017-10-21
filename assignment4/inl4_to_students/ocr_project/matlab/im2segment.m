@@ -1,5 +1,5 @@
 function [S] = im2segment(im)
-  threshold = 110; % The threshold for determining if the pixel should be 
+  threshold = 140 - (1 - mean(mean(im))/255) * 100; % The threshold for determining if the pixel should be 
                    % black or white
 
   nrofsegments = 5;
@@ -7,19 +7,14 @@ function [S] = im2segment(im)
   n = size(im,2); % Columns
 
   S = cell(1,nrofsegments);
+  
+  endRow = 1;
 
   for kk = 1:nrofsegments
 
       image = im;
-      
-      % Determine the interval in which the current character exists
-      endRow = 1;
-      letterNumber = kk;
-      while letterNumber > 0
-          startRow = findNextLetterRow(image, endRow, m, n, threshold);
-          endRow = findNextWhiteRow(image, startRow, m, n, threshold);
-          letterNumber = letterNumber - 1;
-      end
+      startRow = findNextLetterRow(image, endRow, m, n, threshold);
+      endRow = findNextWhiteRow(image, startRow, m, n, threshold);
 
       % Fill all the area outside the interval with black pixels and
       % invert the colors
