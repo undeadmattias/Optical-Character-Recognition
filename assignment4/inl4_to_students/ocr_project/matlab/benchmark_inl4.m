@@ -27,6 +27,7 @@ allY = [];
 jj = 0;
 
 a = dir(datadir);
+completed = 0;
 for ii=1:length(a);
     [path,name,ext] = fileparts([datadir filesep a(ii).name]);
     if strcmp(ext,'.jpg'),
@@ -202,6 +203,10 @@ for ii=1:length(a);
         alljfg = [alljfg;jfg];
         pause(0.2);
     end,
+    if (ii/length(a) > completed + 0.05)
+        disp(ii/length(a)*100 + "%");
+        completed = ii/length(a); 
+    end
 end,
 
 hitrate = nbr_correct/nbr_char;
